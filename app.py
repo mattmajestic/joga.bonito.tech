@@ -27,6 +27,6 @@ line_chart = alt.Chart(data).mark_line().encode(
 ).properties(width=400, height=300)
 
 # Display the charts in two columns
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 col1.write(bar_chart)
 col2.write(line_chart)
