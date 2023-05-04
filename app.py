@@ -8,7 +8,7 @@ st.title("Joga Bonito at Tech")
 st.write("Analysis of player performance at Georgia Tech soccer games")
 
 # Load the data
-data = pd.read_csv("data.csv")
+data = pd.read_csv("tech-stats.csv")
 
 # Create the bar chart of total goals
 total_goals = data.groupby("Player")["Goals"].sum().reset_index()
