@@ -53,16 +53,14 @@ df["Goals_per_match"] = df["Goals"] / df["GameTime"]
 df["Assists_per_match"] = df["Assists"] / df["GameTime"]
 
 # Create charts
-col1, col2, col3, col4 = st.columns(4)
+col1, col2 = st.columns(2)
 with col1:
     st.write("# Goals over Time")
     st.altair_chart(goals_over_time_chart(df))
-with col2:
     st.write("# Goals per Match")
     st.altair_chart(goals_per_match_chart(df))
-with col3:
+with col2:
     st.write("# Assists over Time")
     st.altair_chart(assists_over_time_chart(df))
-with col4:
     st.write("# Assists per Match")
     st.altair_chart(assists_per_match_chart(df))
