@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt
 
 # Set page config
-st.set_page_config(page_title="Joga Bonito at Tech", page_description="Analysis of player performance at Georgia Tech soccer games", layout="wide")
+st.set_page_config(page_title="Joga Bonito at Tech", page_icon=":soccer:")
 
 # Load data
 df = pd.read_csv("tech-stats.csv")
