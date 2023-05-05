@@ -15,26 +15,26 @@ def create_charts(df):
         x='Date:T',
         y='Goals:Q'
     ).properties(
-        height=600,  # <-- double the height
-        width=600,  # <-- double the width
+        height=400,  # <-- double the height
+        width=400,  # <-- double the width
         title='Goals Over Time'
     )
 
     goals_per_match_chart = alt.Chart(df).mark_bar().encode(
-        x='GameTime:O',
-        y='Goals:Q'
+        x='Player:N',
+        y='Goals_per_match:Q'
     ).properties(
-        height=600,  # <-- double the height
-        width=600,  # <-- double the width
+        height=400,  # <-- double the height
+        width=400,  # <-- double the width
         title='Goals per Match'
     )
 
     assists_per_match_chart = alt.Chart(df).mark_bar().encode(
-        x='GameTime:O',
-        y='Assists:Q'
+        x='Player:N',
+        y='Assists_per_match:Q'
     ).properties(
-        height=600,  # <-- double the height
-        width=600,  # <-- double the width
+        height=400,  # <-- double the height
+        width=400,  # <-- double the width
         title='Assists per Match'
     )
 
@@ -42,8 +42,8 @@ def create_charts(df):
         x='Date:T',
         y='Assists:Q'
     ).properties(
-        height=600,  # <-- double the height
-        width=600,  # <-- double the width
+        height=400,  # <-- double the height
+        width=400,  # <-- double the width
         title='Assists Over Time'
     )
 
@@ -52,24 +52,23 @@ def create_charts(df):
 
 # Compute derived data
 df["Date"] = pd.to_datetime(df["Date"])
-df["Goals_per_match"] = df["Goals"] / df["GameTime"]
-df["Assists_per_match"] = df["Assists"] / df["GameTime"]
+df["Goals_per_match"] = df.groupby(['Player', 'Date'])['Goals'].transform('sum') / df.groupby(['Player', 'Date'])['Date'].transform('nunique')
+df["Assists_per_match"] = df.groupby(['Player', 'Date'])['Assists'].transform('sum') / df.groupby(['Player', 'Date'])['Date'].transform('nunique')
 
 # Create charts
-charts = create_charts(df)
 col1, col2 = st.columns(2)
 with col1:
     st.write("# Goals over Time")
-    st.altair_chart(charts[0])
+    st.altair_chart(goals_over_time_chart(df))
     st.write("# Goals per Match")
-    st.altair_chart(charts[1])
+    st.altair_chart(goals_per_match_chart(df))
 with col2:
     st.write("# Assists over Time")
-    st.altair_chart(charts[3])
+    st.altair_chart(assists_over_time_chart(df))
     st.write("# Assists per Match")
-    st.altair_chart(charts[2])
+    st.altair_chart(assists_per_match_chart(df))
 
 # Display video below charts
 st.write("")
 st.write("")
-st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', width=560, height=315, scrolling=False)
+st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0"
