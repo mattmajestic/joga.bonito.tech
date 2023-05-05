@@ -67,18 +67,18 @@ goals_per_player_chart = create_goals_per_player_chart(df)
 assists_per_player_chart = create_assists_per_player_chart(df)
 assists_over_time_chart = create_assists_over_time_chart(df)
 
-# Display charts
-st.write("## Goals over Time")
-st.altair_chart(goals_over_time_chart)
-
-st.write("## Goals per Player")
-st.altair_chart(goals_per_player_chart)
-
-st.write("## Assists per Player")
-st.altair_chart(assists_per_player_chart)
-
-st.write("## Assists over Time")
-st.altair_chart(assists_over_time_chart)
+# Create charts
+col1, col2 = st.columns(2)
+with col1:
+    st.write("## Goals over Time")
+    st.altair_chart(goals_over_time_chart)
+    st.write("## Assists per Player")
+    st.altair_chart(assists_per_player_chart)
+with col2:
+    st.write("## Assists over Time")
+    st.altair_chart(assists_over_time_chart)
+    st.write("## Goals per Player")
+    st.altair_chart(goals_per_player_chart)
 
 # Display video below charts
 st.write("")
