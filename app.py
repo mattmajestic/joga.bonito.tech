@@ -67,8 +67,3 @@ with col2:
     st.altair_chart(assists_over_time_chart(df))
     st.write("# Assists per Match")
     st.altair_chart(assists_per_match_chart(df))
-
-# Display video below charts
-st.write("")
-st.write("")
-st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0")
