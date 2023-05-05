@@ -71,4 +71,4 @@ with col2:
 # Display video below charts
 st.write("")
 st.write("")
-st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0"
+st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0")
