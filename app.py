@@ -1,14 +1,20 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import requests
+import gspread
 
 # Set page config
 st.set_page_config(page_title="Joga Bonito at Tech", page_icon=":soccer:")
 st.title("Joga Bonito at Tech")
 st.write("Analysis of player performance at Georgia Tech soccer games")
 
+r = requests.get(f'https://docs.google.com/spreadsheet/ccc?key=1tPCnVRoxTh597qqxCGqZ5PpFVw8JhvJW1ODo0jH9lA0&output=csv')
+open('dataset.csv', 'wb').write(r.content)
+df = pd.read_csv('dataset.csv')
+
 # Load data
-df = pd.read_csv("tech-stats.csv")
+# df = pd.read_csv("tech-stats.csv")
 
 # Compute derived data
 df["Date"] = pd.to_datetime(df["Date"])
