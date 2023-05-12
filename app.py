@@ -12,6 +12,7 @@ st.write("Analysis of player performance at Georgia Tech soccer games")
 r = requests.get(f'https://docs.google.com/spreadsheet/ccc?key=1tPCnVRoxTh597qqxCGqZ5PpFVw8JhvJW1ODo0jH9lA0&output=csv')
 open('dataset.csv', 'wb').write(r.content)
 df = pd.read_csv('dataset.csv')
+df['Date'] = pd.to_datetime(df['Date'])
 
 # Load data
 # df = pd.read_csv("tech-stats.csv")
