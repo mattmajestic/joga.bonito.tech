@@ -18,76 +18,27 @@ df['Date'] = pd.to_datetime(df['Date'])
 # df = pd.read_csv("tech-stats.csv")
 
 # Compute derived data
-df["Date"] = pd.to_datetime(df["Date"])
-df["Goals_per_match"] = df["Goals"] / df.groupby("Player")["Date"].transform("nunique")
-df["Assists_per_match"] = df["Assists"] / df.groupby("Player")["Date"].transform("nunique")
+df["Goals_per_game"] = df["Goals"] / df.groupby("Player")["Date"].transform("nunique")
+df["Assists_per_game"] = df["Assists"] / df.groupby("Player")["Date"].transform("nunique")
+total_goals = df.groupby("Player")["Goals"].sum()
+total_assists = df.groupby("Player")["Assists"].sum()
 
-def create_goals_over_time_chart(df):
-    chart = alt.Chart(df).mark_line().encode(
-        x='Date:T',
-        y='Goals:Q',
-        color='Player:N'
-    ).properties(
-        height=400,  # <-- double the height
-        width=400,  # <-- double the width
-        title='Goals Over Time'
-    )
-    return chart
+# Display tables
+st.write("## Goals per Game")
+goals_per_game_table = df.groupby("Player")["Goals_per_game"].mean().reset_index()
+st.table(goals_per_game_table)
 
-def create_goals_per_player_chart(df):
-    chart = alt.Chart(df).mark_bar().encode(
-        x='Player:N',
-        y='Goals:Q'
-    ).properties(
-        height=400,
-        width=400,
-        title='Goals per Player'
-    )
-    return chart
+st.write("## Assists per Game")
+assists_per_game_table = df.groupby("Player")["Assists_per_game"].mean().reset_index()
+st.table(assists_per_game_table)
 
-def create_assists_per_player_chart(df):
-    chart = alt.Chart(df).mark_bar().encode(
-        x='Player:N',
-        y='Assists:Q'
-    ).properties(
-        height=400,
-        width=400,
-        title='Assists per Player'
-    )
-    return chart
+st.write("## Total Goals")
+st.table(total_goals)
 
-def create_assists_over_time_chart(df):
-    chart = alt.Chart(df).mark_line().encode(
-        x='Date:T',
-        y='Assists:Q',
-        color='Player:N'
-    ).properties(
-        height=400,  # <-- double the height
-        width=400,  # <-- double the width
-        title='Assists Over Time'
-    )
-    return chart
+st.write("## Total Assists")
+st.table(total_assists)
 
-# Create charts
-goals_over_time_chart = create_goals_over_time_chart(df)
-goals_per_player_chart = create_goals_per_player_chart(df)
-assists_per_player_chart = create_assists_per_player_chart(df)
-assists_over_time_chart = create_assists_over_time_chart(df)
-
-# Create charts
-col1, col2 = st.columns(2)
-with col1:
-    st.write("## Goals over Time")
-    st.altair_chart(goals_over_time_chart)
-    st.write("## Assists per Player")
-    st.altair_chart(assists_per_player_chart)
-with col2:
-    st.write("## Assists over Time")
-    st.altair_chart(assists_over_time_chart)
-    st.write("## Goals per Player")
-    st.altair_chart(goals_per_player_chart)
-
-# Display video below charts
+# Display video
 st.write("")
 st.write("")
 st.components.v1.html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/Xbl6PL3dgmE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', width=560, height=315, scrolling=False)
