@@ -31,6 +31,7 @@ per_game_table = pd.DataFrame({
     "Assists per Game": df.groupby("Player")["Assists_per_game"].mean()
 })
 per_game_table = per_game_table.sort_values("Goals per Game", ascending=False)  # Sort by Goals per Game
+per_game_table.reset_index(drop=True, inplace=True) 
 st.table(per_game_table)
 
 st.write("## Total Goals and Assists")
@@ -40,6 +41,7 @@ total_table = pd.DataFrame({
     "Total Assists": total_assists
 })
 total_table = total_table.sort_values("Total Goals", ascending=False)  # Sort by Total Goals
+total_table.reset_index(drop=True, inplace=True)
 st.table(total_table)
 
 # Display video
