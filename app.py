@@ -24,23 +24,23 @@ total_goals = df.groupby("Player")["Goals"].sum()
 total_assists = df.groupby("Player")["Assists"].sum()
 
 # Display tables
-st.write("## Goals per Game")
-goals_per_game_table = df.groupby("Player")["Goals_per_game"].mean().reset_index()
-goals_per_game_table = goals_per_game_table.sort_values("Goals_per_game", ascending=False)  # Sort in descending order
-st.table(goals_per_game_table)
+st.write("## Per Game Goals and Assists")
+per_game_table = pd.DataFrame({
+    "Player": df["Player"].unique(),
+    "Goals per Game": df.groupby("Player")["Goals_per_game"].mean(),
+    "Assists per Game": df.groupby("Player")["Assists_per_game"].mean()
+})
+per_game_table = per_game_table.sort_values("Goals per Game", ascending=False)  # Sort by Goals per Game
+st.table(per_game_table)
 
-st.write("## Assists per Game")
-assists_per_game_table = df.groupby("Player")["Assists_per_game"].mean().reset_index()
-assists_per_game_table = assists_per_game_table.sort_values("Assists_per_game", ascending=False)  # Sort in descending order
-st.table(assists_per_game_table)
-
-st.write("## Total Goals")
-total_goals = total_goals.sort_values(ascending=False)  # Sort in descending order
-st.table(total_goals)
-
-st.write("## Total Assists")
-total_assists = total_assists.sort_values(ascending=False)  # Sort in descending order
-st.table(total_assists)
+st.write("## Total Goals and Assists")
+total_table = pd.DataFrame({
+    "Player": total_goals.index,
+    "Total Goals": total_goals,
+    "Total Assists": total_assists
+})
+total_table = total_table.sort_values("Total Goals", ascending=False)  # Sort by Total Goals
+st.table(total_table)
 
 # Display video
 st.write("")
