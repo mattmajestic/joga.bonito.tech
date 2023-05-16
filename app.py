@@ -13,10 +13,6 @@ r = requests.get(f'https://docs.google.com/spreadsheet/ccc?key=1tPCnVRoxTh597qqx
 open('dataset.csv', 'wb').write(r.content)
 df = pd.read_csv('dataset.csv')
 
-# Remove rownames
-df = df.rename(columns={'Unnamed: 0': ''})
-df.set_index('', inplace=True)
-
 # Calculate metrics
 df['Goals per Game'] = df['Goals'] / df['Games Played']
 df['Assists per Game'] = df['Assists'] / df['Games Played']
