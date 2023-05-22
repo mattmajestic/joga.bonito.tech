@@ -25,17 +25,18 @@ total_goals_df = df[['Player Name', 'Goals']].sort_values(by='Goals', ascending=
 total_assists_df = df[['Player Name', 'Assists']].sort_values(by='Assists', ascending=False)
 
 # Display tables
-st.write("## Goals per Game")
-st.table(goals_per_game_df)
+show_all_rows = st.button("Show All Player Stats")
 
-st.write("## Assists per Game")
-st.table(assists_per_game_df)
-
-st.write("## Total Goals")
-st.table(total_goals_df)
-
-st.write("## Total Assists")
-st.table(total_assists_df)
+if show_all_rows:
+    st.dataframe(goals_per_game_df, height=500)
+    st.dataframe(assists_per_game_df, height=500)
+    st.dataframe(total_goals_df, height=500)
+    st.dataframe(total_assists_df, height=500)
+else:
+    st.dataframe(goals_per_game_df.head(10), height=500)
+    st.dataframe(assists_per_game_df.head(10), height=500)
+    st.dataframe(total_goals_df.head(10), height=500)
+    st.dataframe(total_assists_df.head(10), height=500)
 
 # Display video
 st.write("")
