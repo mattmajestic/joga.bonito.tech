@@ -24,19 +24,36 @@ assists_per_game_df = df[['Player Name', 'Assists per Game']].sort_values(by='As
 total_goals_df = df[['Player Name', 'Goals']].sort_values(by='Goals', ascending=False)
 total_assists_df = df[['Player Name', 'Assists']].sort_values(by='Assists', ascending=False)
 
-# Display tables
-show_all_rows = st.button("Show All Player Stats")
+# Display tables in two columns
+col1, col2 = st.columns(2)
 
-if show_all_rows:
-    st.dataframe(goals_per_game_df, height=500)
-    st.dataframe(assists_per_game_df, height=500)
-    st.dataframe(total_goals_df, height=500)
-    st.dataframe(total_assists_df, height=500)
+col1.header("Goals per Game")
+show_all_rows1 = st.checkbox("Show All Rows", key='goals_per_game')
+if show_all_rows1:
+    col1.table(goals_per_game_df)
 else:
-    st.dataframe(goals_per_game_df.head(10), height=500)
-    st.dataframe(assists_per_game_df.head(10), height=500)
-    st.dataframe(total_goals_df.head(10), height=500)
-    st.dataframe(total_assists_df.head(10), height=500)
+    col1.table(goals_per_game_df.head(10))
+
+col1.header("Assists per Game")
+show_all_rows2 = st.checkbox("Show All Rows", key='assists_per_game')
+if show_all_rows2:
+    col1.table(assists_per_game_df)
+else:
+    col1.table(assists_per_game_df.head(10))
+
+col2.header("Total Goals")
+show_all_rows3 = st.checkbox("Show All Rows", key='total_goals')
+if show_all_rows3:
+    col2.table(total_goals_df)
+else:
+    col2.table(total_goals_df.head(10))
+
+col2.header("Total Assists")
+show_all_rows4 = st.checkbox("Show All Rows", key='total_assists')
+if show_all_rows4:
+    col2.table(total_assists_df)
+else:
+    col2.table(total_assists_df.head(10))
 
 # Display video
 st.write("")
