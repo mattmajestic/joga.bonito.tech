@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joga-bonito
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joga-bonito
+  template:
+    metadata:
+      labels:
+        app: joga-bonito
+    spec:
+      containers:
+        - name: joga-bonito
+          image: gcr.io/${PROJECT_ID}/joga-bonito:latest
+          ports:
+            - containerPort: 8501
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: joga-bonito-service
+spec:
+  selector:
+    app: joga-bonito
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8501
+  type: LoadBalancer
